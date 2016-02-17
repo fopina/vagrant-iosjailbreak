@@ -16,5 +16,5 @@ Now just `vagrant ssh` and create your tools/tweaks.
 Links
 -----
 * [Theos]( http://iphonedevwiki.net/index.php/Theos/Setup#On_Mac_OS_X_or_Linux)
-* [Linux iOS Toolchain](https://github.com/waneck/linux-ios-toolchain)
+* [Linux iOS Toolchain](https://github.com/tpoechtrager/cctools-port/)
 * [iOS SDK](http://iphone.howett.net/sdks/)
