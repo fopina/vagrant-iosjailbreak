@@ -2,6 +2,8 @@ Vagrant file to quickly jump into jailbreak tweak development.
 
 Full setup with Theos, toolchain and iOS 8.1 SDK.
 
+Also included a small shortcut bash function `setphone` to make it easier to set (and persist) `THEOS_DEVICE_IP` variable
+
 Quickstart
 ----------
 
