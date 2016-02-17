@@ -7,7 +7,7 @@ Also included a small shortcut bash function `setphone` to make it easier to set
 Quickstart
 ----------
 
-```
+```bash
 git clone https://github.com/fopina/vagrant-iosjailbreak
 cd vagrant-iosjailbreak
 vagrant up
@@ -18,7 +18,7 @@ Now just `vagrant ssh` and create your tools/tweaks using Theos
 Hello World
 -----------
 
-```
+```sh
 skmac:vagrant-iosjailbreak fopina$ vagrant ssh
 
 Welcome to JBDev VM.
@@ -63,7 +63,7 @@ make[2]: Nothing to be done for 'internal-tool-compile'.
 dpkg-deb: warning: deprecated compression type 'lzma'; use xz instead
 dpkg-deb: warning: ignoring 1 warning about the control file(s)
 dpkg-deb: building package `com.yourcompany.helloworld' in `./debs/com.yourcompany.helloworld_0.0.1-1+debug_iphoneos-arm.deb'.
-vagrant@jailbreakdev:~/helloworld$ setphone skFive
+vagrant@jailbreakdev:~/helloworld$ setphone 192.168.33.33
 vagrant@jailbreakdev:~/helloworld$ make install
 ==> Installing…
 root@skfive's password:
@@ -71,7 +71,7 @@ Selecting previously deselected package com.yourcompany.helloworld.
 (Reading database ... 2560 files and directories currently installed.)
 Unpacking com.yourcompany.helloworld (from /tmp/_theos_install.deb) ...
 Setting up com.yourcompany.helloworld (0.0.1-1+debug) ...
-vagrant@jailbreakdev:~/helloworld$ ssh mobile@skFive /usr/bin/helloworld
+vagrant@jailbreakdev:~/helloworld$ ssh mobile@192.168.33.33 /usr/bin/helloworld
 mobile@skfive's password:
 hello world
 vagrant@jailbreakdev:~/helloworld$
