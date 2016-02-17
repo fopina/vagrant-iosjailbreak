@@ -25,4 +25,16 @@ fi
 cat <<EOF > /etc/profile.d/theos.sh
 export THEOS=$THEOS
 export PATH="\$THEOS/bin:\$PATH"
+
+function setphone
+{
+  if [ -z \$1 ]; then
+    echo "Usage: setphone PHONE_IP" 1>&2
+    return 1
+  fi
+
+  grep ^THEOS_DEVICE_IP= \$HOME/.profile > /dev/null || echo "THEOS_DEVICE_IP=" >> \$HOME/.profile
+  sed -i "s/^THEOS_DEVICE_IP=.*/THEOS_DEVICE_IP=\$1/" \$HOME/.profile
+  export THEOS_DEVICE_IP=\$1
+}
 EOF
