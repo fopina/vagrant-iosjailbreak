@@ -16,4 +16,5 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "apt-update", type: "shell", path: "scripts/apt_installs.sh"
   config.vm.provision "install-theos", type: "shell", path: "scripts/install_theos.sh"
+  config.vm.provision "install-sdk", type: "shell", path: "scripts/install_sdk.sh"
 end
