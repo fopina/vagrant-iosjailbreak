@@ -15,8 +15,9 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision "hostname-motd", type: "shell", path: "scripts/hostname_motd.sh"
-  config.vm.provision "apt-update", type: "shell", path: "scripts/apt_installs.sh"
-  config.vm.provision "install-theos", type: "shell", path: "scripts/install_theos.sh"
-  config.vm.provision "install-sdk", type: "shell", path: "scripts/install_sdk.sh"
-  config.vm.provision "install-toolchain", type: "shell", path: "scripts/install_toolchain.sh"
+  config.vm.provision "locale", type: "shell", path: "scripts/set_locale.sh", args: ENV['LC_NAME']
+  config.vm.provision "apt", type: "shell", path: "scripts/apt_installs.sh"
+  config.vm.provision "theos", type: "shell", path: "scripts/install_theos.sh"
+  config.vm.provision "sdk", type: "shell", path: "scripts/install_sdk.sh"
+  config.vm.provision "toolchain", type: "shell", path: "scripts/install_toolchain.sh"
 end

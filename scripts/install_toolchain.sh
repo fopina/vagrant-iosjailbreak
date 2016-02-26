@@ -2,21 +2,22 @@
 
 set -e
 
-# Proper linux toolchain build to be included here...
-
-ROOTSDKS=/root/sdks
-
 if [ -e $THEOS/toolchain/linux/iphone/bin/armv7-apple-darwin11-clang ]; then
-  echo "iOS toolchain already installed" > /dev/stderr
+  echo "iOS toolchain already installed" >&2
 else
-  echo "Installing iOS toolchain" > /dev/stderr
-  apt-get -qq install unzip
+  echo "Installing iOS toolchain" >&2
 
-  if [ ! -e $ROOTSDKS/toolchain.zip ]; then
+  export DEBIAN_FRONTEND=noninteractive
+  ROOTSDKS=/root/sdks
+
+  apt-get -qq install clang build-essential
+
+  if [ ! -e $ROOTSDKS/toolchain.tbz2 ]; then
     [ -d $ROOTSDKS ] || mkdir $ROOTSDKS
-    wget --quiet -O $ROOTSDKS/toolchain.zip https://developer.angelxwind.net/Linux/ios-toolchain_clang%2bllvm%2bld64_latest_linux_x86_64.zip
+    wget --quiet -O $ROOTSDKS/toolchain.tbz2 https://github.com/fopina/vagrant-iosjailbreak/releases/download/v0.0/toolchain.tbz2
   fi
 
   cd $THEOS/toolchain
-  unzip -qq $ROOTSDKS/toolchain.zip
+  tar xjpf $ROOTSDKS/toolchain.tbz2
+  ln -s $THEOS/toolchain/linux/iphone/bin/ldid $THEOS/bin/ldid
 fi

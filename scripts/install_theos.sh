@@ -5,11 +5,11 @@ set -e
 THEOS=/opt/theos
 
 if [ -d $THEOS/.git ]; then
-  echo "Updating THEOS" > /dev/stderr
+  echo "Updating THEOS" >&2
   cd $THEOS
   git pull
 else
-  echo "Installing THEOS"  > /dev/stderr
+  echo "Installing THEOS"  >&2
   git clone --recursive https://github.com/theos/theos $THEOS
 fi
 
