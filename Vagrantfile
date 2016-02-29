@@ -14,6 +14,8 @@ Vagrant.configure(2) do |config|
     vb.linked_clone = true
   end
 
+  config.vm.synced_folder "share/", "/share"
+
   config.vm.provision "hostname-motd", type: "shell", path: "scripts/hostname_motd.sh"
   config.vm.provision "locale", type: "shell", path: "scripts/set_locale.sh", args: ENV['LC_NAME']
   config.vm.provision "apt", type: "shell", path: "scripts/apt_installs.sh"
