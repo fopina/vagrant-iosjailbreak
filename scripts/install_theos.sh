@@ -28,4 +28,14 @@ function setphone
   sed -i "s/^THEOS_DEVICE_IP=.*/THEOS_DEVICE_IP=\$1/" \$HOME/.profile
   export THEOS_DEVICE_IP=\$1
 }
+
+function sshi
+{
+  if [ -z \$THEOS_DEVICE_IP ]; then
+    echo "No device defined, use setphone first"
+    return 1
+  fi
+
+  ssh -l root \$THEOS_DEVICE_IP \$*
+}
 EOF

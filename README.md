@@ -24,7 +24,6 @@ skmac:vagrant-iosjailbreak fopina$ vagrant ssh
 Welcome to JBDev VM.
 Report issues in https://github.com/fopina/vagrant-iosjailbreak
 
-You have mail.
 Last login: Wed Feb 17 15:23:35 2016 from 10.0.2.2
 vagrant@jailbreakdev:~$ nic.pl helloworld
 NIC 2.0 - New Instance Creator
@@ -66,13 +65,13 @@ dpkg-deb: building package `com.yourcompany.helloworld' in `./debs/com.yourcompa
 vagrant@jailbreakdev:~/helloworld$ setphone 192.168.33.33
 vagrant@jailbreakdev:~/helloworld$ make install
 ==> Installing…
-root@skfive's password:
+root@192.168.33.33's password:
 Selecting previously deselected package com.yourcompany.helloworld.
 (Reading database ... 2560 files and directories currently installed.)
 Unpacking com.yourcompany.helloworld (from /tmp/_theos_install.deb) ...
 Setting up com.yourcompany.helloworld (0.0.1-1+debug) ...
-vagrant@jailbreakdev:~/helloworld$ ssh mobile@192.168.33.33 /usr/bin/helloworld
-mobile@skfive's password:
+vagrant@jailbreakdev:~/helloworld$ sshi helloworld
+mobile@192.168.33.33's password:
 hello world
 vagrant@jailbreakdev:~/helloworld$
 ```
