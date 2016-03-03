@@ -146,5 +146,10 @@ Basically it will be a reboot/respring notification!
 *SpringBoard* will restart (aka *respring*) and you'll get the alert.
 
 Tweak AppStore App
-----
-ToDo
+------------------
+
+For this example we'll tweak WhatsApp as an example.
+
+We'll need to install these on your iOS device:
+* Clutch - compiled from [source](https://github.com/KJCracks/Clutch) or install from some (shady?) repository
+* class-dump - available in [cydia official repositories](https://cydia.saurik.com/info/class-dump/)
