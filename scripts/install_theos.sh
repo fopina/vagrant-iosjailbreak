@@ -24,8 +24,8 @@ function setphone
     return 1
   fi
 
-  grep ^THEOS_DEVICE_IP= \$HOME/.profile > /dev/null || echo "THEOS_DEVICE_IP=" >> \$HOME/.profile
-  sed -i "s/^THEOS_DEVICE_IP=.*/THEOS_DEVICE_IP=\$1/" \$HOME/.profile
+  grep ^'export THEOS_DEVICE_IP=' \$HOME/.profile > /dev/null || echo "export THEOS_DEVICE_IP=" >> \$HOME/.profile
+  sed -i "s/^export THEOS_DEVICE_IP=.*/export THEOS_DEVICE_IP=\$1/" \$HOME/.profile
   export THEOS_DEVICE_IP=\$1
 }
 
