@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     vb.name = "jailbreakdev"
-    vb.linked_clone = true
+    vb.linked_clone = true if Vagrant::VERSION =~ /^1.8/
   end
 
   config.vm.synced_folder "share/", "/share"
