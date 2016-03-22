@@ -153,3 +153,17 @@ For this example we'll tweak WhatsApp as an example.
 We'll need to install these on your iOS device:
 * Clutch - compiled from [source](https://github.com/KJCracks/Clutch) or install from some (shady?) repository
 * class-dump - available in [cydia official repositories](https://cydia.saurik.com/info/class-dump/)
+
+* Use `clutch` to find the bundle id and decrypt the app:
+
+  ```
+  vagrant@jailbreakdev:~$ sshi
+  root@myMobile's password:
+  myMobile:~ root#
+  myMobile:~ root# clutch -i | grep -i whatsapp
+  78:  WhatsApp Messenger <net.whatsapp.WhatsApp>
+  myMobile:~ root# clutch -b net.whatsapp.WhatsApp
+  ...
+  Finished dumping net.whatsapp.WhatsApp to /var/tmp/clutch/5555D7777-5199-4C6D-A4FB-5F88EA99FCCC
+  Finished dumping net.whatsapp.WhatsApp in 3.1 seconds
+  ```
