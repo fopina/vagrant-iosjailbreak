@@ -148,22 +148,82 @@ Basically it will be a reboot/respring notification!
 Tweak AppStore App
 ------------------
 
-For this example we'll tweak WhatsApp as an example.
+For this example we'll tweak Shazam to show an alert when you tap the big Shazam button.
 
 We'll need to install these on your iOS device:
-* Clutch - compiled from [source](https://github.com/KJCracks/Clutch) or install from some (shady?) repository
+* Clutch - compiled from [source](https://github.com/KJCracks/Clutch) or download a [released binary](https://github.com/KJCracks/Clutch/releases/tag/Clutch-2.0.1)
 * class-dump - available in [cydia official repositories](https://cydia.saurik.com/info/class-dump/)
 
-* Use `clutch` to find the bundle id and decrypt the app:
+* Use `Clutch` to find the bundle id and decrypt the app:
 
   ```
   vagrant@jailbreakdev:~$ sshi
-  root@myMobile's password:
-  myMobile:~ root#
-  myMobile:~ root# clutch -i | grep -i whatsapp
-  78:  WhatsApp Messenger <net.whatsapp.WhatsApp>
-  myMobile:~ root# clutch -b net.whatsapp.WhatsApp
-  ...
-  Finished dumping net.whatsapp.WhatsApp to /var/tmp/clutch/5555D7777-5199-4C6D-A4FB-5F88EA99FCCC
-  Finished dumping net.whatsapp.WhatsApp in 3.1 seconds
+
+  192.168.33.33:~ root# Clutch -i | grep -i shazam
+  4:   Shazam <com.shazam.Shazam>
+
+  192.168.33.33:~ root# Clutch -b 4
+  Now dumping com.shazam.Shazam
+  com.shazam.Shazam contains watchOS 2 compatible application. It's not possible to dump watchOS 2 apps with Clutch 2.0.1 at this moment.
+  Preparing to dump <Shazam>
+  Path: /private/var/mobile/Applications/223F3305-0F64-4EA6-B18F-662BFAED9B16/Shazam.app/Shazam
+  Dumping <Shazam> (armv7)
+  DUMP | ARMDumper <armv7> <Shazam> Patched cryptid (32bit segment)
+  DUMP | ARMDumper <armv7> <Shazam> Writing new checksum
+  Finished 'stripping' binary <Shazam>
+  Note: This binary will be missing some undecryptable architectures
+
+  Finished dumping com.shazam.Shazam to /var/tmp/clutch/06F58677-FD02-405F-B6BB-65B32F102935
+  Finished dumping com.shazam.Shazam in 9.9 seconds
+
+  192.168.33.33:~ root# class-dump -H -o shazam /var/tmp/clutch/06F58677-FD02-405F-B6BB-65B32F102935/com.shazam.Shazam/Shazam
+  192.168.33.33:~ root# logout
+  Connection to 192.168.33.33 closed.
+
+  vagrant@jailbreakdev:~$ cd /share/
+  vagrant@jailbreakdev:/share$ nic.pl -t iphone/tweak -p com.skmobi.shazamtweak -n ShazamTweak -u fopina
+  NIC 2.0 - New Instance Creator
+  ------------------------------
+  [iphone/tweak] MobileSubstrate Bundle filter [com.apple.springboard]: com.shazam.Shazam
+  [iphone/tweak] List of applications to terminate upon installation (space-separated, '-' for none) [SpringBoard]: Shazam
+  Instantiating iphone/tweak in shazamtweak/...
+  Done.
+
+  vagrant@jailbreakdev:/share$ scp -r root@$THEOS_DEVICE_IP:shazam/ shazamtweak/headers
   ```
+
+  * As the tab is called *Home*, we can make an educated guess that the view controller header will contain *home* and end in *controller*
+
+  ```
+  vagrant@jailbreakdev:/share/shazamtweak$ find . -iname *home*controller*
+  ./headers/SHNewsHomeScreenViewController.h
+  ```
+
+  * As we look through *SHNewsHomeScreenViewController* header we can see a method called `taggingViewDidStartTagging`, let's hook it up. Update *Tweak.xm* with
+
+  ```
+  @interface SHNewsHomeScreenViewController
+  - (void)taggingViewDidStartTagging;
+  @end
+
+  %hook SHNewsHomeScreenViewController
+
+  - (void)taggingViewDidStartTagging {
+  	%orig;
+  	UIAlertView *alert1 = [[UIAlertView alloc] initWithTitle:@""
+  			message:@"Shazam!!!"
+  			delegate:self
+  			cancelButtonTitle:@"OK..."
+  			otherButtonTitles:nil];
+  	[alert1 show];
+  	[alert1 release];
+  }
+
+  %end
+  ```
+
+  * Open the `Makefile` and add `ShazamTweak_FRAMEWORKS = UIKit` after the line starting with `ShazamTweak_FILES` to be able to use alerts
+
+  * Compile, package and install: `make && make package && make install`
+
+  * Open Shazam and "Touch to Shazam"!
